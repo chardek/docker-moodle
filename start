@@ -1,0 +1,10 @@
+#!/bin/sh
+# Change to Apache2 htmol dir
+cd /var/www/html
+
+# Remove stall pid file
+rm -f /var/run/apache2/apache2.pid
+
+# Start apache2
+. /etc/apache2/envvars
+/usr/sbin/apache2 -D FOREGROUND
