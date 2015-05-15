@@ -16,18 +16,25 @@ RUN rm -rf /var/www/html
 
 # Download 2.8.X release of Moodle uncomment when Elegance theme is released for version 2.8.X
 ADD https://download.moodle.org/download.php/direct/stable28/moodle-2.8.5.zip /tmp/
-RUN unzip /tmp/moodle-2.8.5.zip -d /var/www/
+RUN unzip /tmp/moodle-2.8.5.zip -d /var/www/ && rm -f /tmp/moodle-2.8.5.zip
+
+# Download and install the moodle 2.8 Course Enrolment upon Approval plugin
+ADD https://moodle.org/plugins/download.php/7797/enrol_apply_moodle28_2015012500.zip /tmp/
+RUN unzip /tmp/enrol_apply_moodle28_2015012500.zip -d /var/www/moodle/enrol/ && \
+	rm -f /tmp/enrol_apply_moodle28_2015012500.zip
 
 # symlink moodle install dir to html
 RUN ln -s /var/www/moodle /var/www/html
 
 # Download theme bootstrap for moodle 2.8.X uncomment when Elegance theme is released for version 2.8.X
 ADD https://moodle.org/plugins/download.php/7472/theme_bootstrap_moodle28_2014120803.zip /tmp/
-RUN unzip /tmp/theme_bootstrap_moodle28_2014120803.zip -d /var/www/moodle/theme/
+RUN unzip /tmp/theme_bootstrap_moodle28_2014120803.zip -d /var/www/moodle/theme/ && \
+	rm -f /tmp/theme_bootstrap_moodle28_2014120803.zip
 
 # Download Elegance theme for Moodle 2.7.X
 ADD https://moodle.org/plugins/download.php/6707/theme_elegance_moodle27_2014082100.zip /tmp/
-RUN unzip /tmp/theme_elegance_moodle27_2014082100.zip -d /var/www/moodle/theme/
+RUN unzip /tmp/theme_elegance_moodle27_2014082100.zip -d /var/www/moodle/theme/ && \
+	rm -f /tmp/theme_elegance_moodle27_2014082100.zip
 
 # Copy current moodle conf to apache site available
 ADD moodle.conf /etc/apache2/sites-available/
